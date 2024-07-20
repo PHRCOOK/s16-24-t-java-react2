@@ -51,7 +51,7 @@ function Login() {
 				{/* Imagen a la izquierda */}
 				<div className="md:w-1/2 px-6 py-8">
 					<img
-						src="client\public\OIG21.jpeg"
+						src="https://github.com/PHRCOOK/s16-24-t-java-react2/blob/main/client/public/OIG21.jpeg"
 						alt="Logo de la empresa"
 						className="mx-auto h-30"
 					/>
