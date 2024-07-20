@@ -21,12 +21,12 @@ function Login() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleLogin();
-		const { data } = await axios.post(
-			"/auth/login",
-			{ email: username, password: password },
-		)
+		const { data } = await axios.post("/auth/login", {
+			email: username,
+			password: password,
+		});
 		if (data.role) {
-			handleIsLogged(data.token)
+			handleIsLogged(data.token);
 		} else {
 			console.log("Usuario o contraseña incorrectos");
 
@@ -51,7 +51,7 @@ function Login() {
 				{/* Imagen a la izquierda */}
 				<div className="md:w-1/2 px-6 py-8">
 					<img
-						src="src/assets/OIG21.jpeg"
+						src="client\public\OIG21.jpeg"
 						alt="Logo de la empresa"
 						className="mx-auto h-30"
 					/>
