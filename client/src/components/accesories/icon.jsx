@@ -1,4 +1,4 @@
-function Icon({ width = 32, height = width, fill = 'currentColor', iconName, className }) {
+function Icon({ width = 32, height = width, fill = 'currentColor', iconName, className, stroke }) {
 
   const ICONS = {
     magnifyingGlass: {
@@ -36,15 +36,27 @@ function Icon({ width = 32, height = width, fill = 'currentColor', iconName, cla
     mail_notifications: {
       path: `<path d="M120,128a32,32,0,1,0-32,32A32,32,0,0,0,120,128Zm-48,0a16,16,0,1,1,16,16A16,16,0,0,1,72,128Zm152-24H208V40a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8V64H40A16,16,0,0,0,24,80v96a16,16,0,0,0,16,16H72v16a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V112A8,8,0,0,0,224,104Zm-58.34,60L216,127.65v72.7ZM112,48h80v77.24l-40,28.89V80a16,16,0,0,0-16-16H112ZM40,80h96v77.9c0,.12,0,.24,0,.36V176H40ZM88,192h48a16,16,0,0,0,16-16v-2.13L199.26,208H88Z"></path>`,
       viewBox: '0 0 256 256',
+    },
+    plus: {
+      path: `<path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>`,
+      viewBox: '0 0 256 256',
+    },
+    bot: {
+      path: `<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />`,
+      viewBox: '0 0 24 24',
+    },
+    arrow_down: {
+      path: `<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />`,
+      viewBox: '0 0 24 24',
     }
-
   }
 
   return (
-    <svg className={className} width={width} height={height} fill={fill} viewBox={ICONS[iconName].viewBox}>
+    <svg className={className} width={width} height={height} fill={fill} viewBox={ICONS[iconName].viewBox} stroke={stroke}>
       <g dangerouslySetInnerHTML={{ __html: `${ICONS[iconName].path}` }} />
     </svg>
   )
 }
 
 export default Icon
+
