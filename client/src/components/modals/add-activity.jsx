@@ -10,7 +10,7 @@ import { ActivitiySchema } from "../../lib/zod-schemas";
 import { capitalize } from "../../lib/helpers";
 import { DaysColumns, Hours } from "../../lib/const";
 
-function AddActivity({ handleAddModal, setActivities, activities}) {
+function AddActivity({ handleAddModal, cuit }) {
   const [activityName, setActivityName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -41,10 +41,11 @@ function AddActivity({ handleAddModal, setActivities, activities}) {
     setErrors([]);
 
     const newActivity = {
-      activity_name: capitalize(activityName),
-      start_time: startTime,
-      end_time: endTime,
-      day_of_week: dayOfWeek,
+      gymCuit: cuit,
+      startTime: startTime,
+      endTime: endTime,
+      activityName: capitalize(activityName),
+      dayOfWeek: dayOfWeek,
       color: bgColor
     }
 
@@ -62,21 +63,26 @@ function AddActivity({ handleAddModal, setActivities, activities}) {
         setErrors(error.issues);
         return
       }
-      // TODO: Send data
-      // const { data } = await axios.post("url", {
-      //   data
-      // });
 
-      if (data) {
-        // TODO: Handle success
-        setActivities([...activities, newActivity]);
-        setActivityName("");
-        setStartTime("");
-        setEndTime("");
-        setDayOfWeek("");
-        setErrors([]);
-        handleAddModal();
-      }
+      console.log("parsedDAta",data);
+      
+      const response = await axios.post("/api/v1/WorkoutSessions/create", data , {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("sportify_jwt_access")}`,
+          "Content-Type": "Application/json"
+        }
+      });
+
+      console.log(response);
+      // if (response.data) {
+      //   // TODO: Handle success
+      //   setActivityName("");
+      //   setStartTime("");
+      //   setEndTime("");
+      //   setDayOfWeek("");
+      //   setErrors([]);
+      //   handleAddModal();
+      // }
     }
     catch (error) {
       console.log(error);
@@ -113,7 +119,6 @@ function AddActivity({ handleAddModal, setActivities, activities}) {
             <button className="bg-primary-0 text-secondary-0 px-6 py-2 " type="submit">{t("select.add")}</button>
           </div>
         </form>
-
       </div>
     </Modal>
   )

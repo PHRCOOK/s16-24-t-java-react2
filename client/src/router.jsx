@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Table from "./components/table/table";
 import Calendar from "./components/activities/activities";
-import RutaPrueba from "./rutaprueba";
 import Support from "./components/technical-support/technical-support";
 
 export const router = createBrowserRouter([
@@ -24,7 +23,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/headquarters",
-				element: <RutaPrueba />,
+				element: <Table />,
 			},
 			{
 				path: "/technical-support",

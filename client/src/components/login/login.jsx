@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import axios from "axios";
 import ForgetPassword from "../modals/forget-password.jsx";
-import Logo from "../../../public/image/OIG21.jpeg";
+import Logo from "../../../public/image/Logo.png";
 
 function Login() {
 	const [username, setUsername] = useState("admin@sportify.com");
 	const [password, setPassword] = useState("admin");
 	const [showForgetPasswordModal, setShowForgetPasswordModal] = useState(false);
-	const { handleLogin, handleIsLogged } = useContext(LoginContext);
+	const { handleLogin, handleIsLogged, setUser } = useContext(LoginContext);
 
 	const { t } = useTranslation();
 
@@ -30,6 +30,7 @@ function Login() {
 			password: password,
 		});
 		if (data.role) {
+			setUser({username: data.username, role: data.role});
 			handleIsLogged(data.token);
 		} else {
 			console.log("Usuario o contraseña incorrectos");
@@ -70,7 +71,7 @@ function Login() {
 							type="text"
 							autoComplete="username"
 							required
-							className="min-w-96 px-6 py-2 rounded-lg shadow-inner shadow-black/40 "
+							className="min-w-96 px-6 py-2 rounded-full shadow-inner shadow-black/40 "
 							placeholder="Username"
 							value={username}
 							onChange={handleUsernameChange}
@@ -86,7 +87,7 @@ function Login() {
 							type="password"
 							autoComplete="current-password"
 							required
-							className="min-w-96 px-6 py-2 rounded-lg shadow-inner shadow-black/40"
+							className="min-w-96 px-6 py-2 rounded-full shadow-inner shadow-black/40"
 							placeholder="Password"
 							value={password}
 							onChange={handlePasswordChange}
@@ -99,7 +100,7 @@ function Login() {
 						>
 							{t('login.forget_password')}
 						</a>
-						<div className="flex gap-8">
+						<div className="flex gap-32">
 							<div className="flex items-center">
 								<input
 									id="remember_me"
@@ -116,7 +117,7 @@ function Login() {
 							</div>
 							<button
 								type="submit"
-								className="w-full py-2 rounded-2xl shadow-md shadow-primary-0  font-semibold text-primary-0 bg-white hover:text-white hover:bg-primary-20 active:shadow-none"
+								className="w-full py-2 rounded-full shadow-md shadow-primary-0  font-semibold text-primary-0 bg-white hover:text-white hover:bg-primary-20 active:shadow-none"
 							>
 								{t('login.login')}
 							</button>
