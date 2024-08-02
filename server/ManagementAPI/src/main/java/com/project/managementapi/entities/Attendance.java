@@ -22,7 +22,7 @@ public class Attendance {
     private LocalDate date;
     private LocalTime time;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "complex_id")
     @JsonBackReference
     private Complex complex;

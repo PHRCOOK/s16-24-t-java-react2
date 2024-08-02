@@ -1,15 +1,18 @@
 package com.project.managementapi.utils;
 
-import com.project.managementapi.dtos.AddressDTO;
-import com.project.managementapi.dtos.CustomerDTO;
-import com.project.managementapi.dtos.ComplexDTO;
-import com.project.managementapi.dtos.EmployeeDTO;
-import com.project.managementapi.dtos.PersonalInfoDTO;
+import com.project.managementapi.dtos.*;
 import com.project.managementapi.entities.Address;
 import com.project.managementapi.entities.Complex;
 import com.project.managementapi.entities.Customer;
+import com.project.managementapi.entities.WorkoutSession;
 import com.project.managementapi.entities.employee.Employee;
+import com.project.managementapi.entities.membership.Membership;
 import com.project.managementapi.entities.personalInfo.PersonalInfo;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Mapper {
 
@@ -34,6 +37,7 @@ public class Mapper {
                 .birthDate(personalInfo.getBirthDate())
                 .phoneNumber(personalInfo.getPhoneNumber())
                 .address(addressToDTO(personalInfo.getAddress()))
+                .startDate(personalInfo.getStartDate())
                 .build();
     }
 
@@ -47,7 +51,13 @@ public class Mapper {
                 .build();
     }
 
-    public static ComplexDTO complexToDTO(Complex complex){
+    public static ComplexDTO complexToDTO(Complex complex, List<WorkoutSession> sessions){
+
+        List<WorkoutSessionDTO> list = new ArrayList<>();
+        for(WorkoutSession w: sessions){
+            list.add(workoutSessionToDTO(w));
+        }
+
         return ComplexDTO
                 .builder()
                 .title(complex.getTitle())
@@ -55,6 +65,7 @@ public class Mapper {
                 .phoneNumber(complex.getPhoneNumber())
                 .apertureDate(complex.getApertureDate())
                 .address(addressToDTO(complex.getAddress()))
+                .activities(list)
                 .build();
     }
 
@@ -63,7 +74,35 @@ public class Mapper {
         return CustomerDTO.builder()
                 .personalInfoDTO(personalInfoToDTO(customer.getPersonalInfo()))
                 .status(customer.getStatus())
-                .sport(customer.getSports().name())
+                .sport(customer.getSports())
+                .build();
+    }
+
+    public static CustomerDTO customerToDTOWithMembership(Customer customer, Membership membership) {
+        return CustomerDTO.builder()
+                .personalInfoDTO(personalInfoToDTO(customer.getPersonalInfo()))
+                .status(customer.getStatus())
+                .sport(customer.getSports())
+                .membershipDTO(membershipToDTO(membership))
+                .build();
+    }
+
+    public static WorkoutSessionDTO workoutSessionToDTO(WorkoutSession workoutSession) {
+        return WorkoutSessionDTO
+                .builder()
+                .startTime(workoutSession.getStartTime())
+                .endTime(workoutSession.getEndTime())
+                .activityName(workoutSession.getActivityName())
+                .color(workoutSession.getColor())
+                .dayOfWeek(workoutSession.getDayOfWeek())
+                .gymCuit(workoutSession.getComplex().getCuit())
+                .build();
+    }
+
+    public static MembershipDTO membershipToDTO(Membership membership) {
+        return MembershipDTO.builder()
+                .endDate(String.valueOf(membership.getEndDate()))
+                .membershipType(String.valueOf(membership.getMembershipType()))
                 .build();
     }
 }

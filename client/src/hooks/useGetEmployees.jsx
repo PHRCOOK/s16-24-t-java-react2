@@ -5,6 +5,7 @@ import { formatEmployeeData } from "../lib/helpers";
 
 const useGetEmployees = (refresh) => {
   const [employees, setEmployees] = useState([]);
+  const [rawEmployees, setRawEmployees] = useState([]);
   const [error, setError] = useState(null);
   const { isLogged } = useContext(LoginContext);
 
@@ -17,8 +18,9 @@ const useGetEmployees = (refresh) => {
           }
         });
         const { content } = data.object
-        const [admin, ...employees] = content
-        const formatedContent = formatEmployeeData(employees);
+        const [admin, ...rawEmployees] = content
+        setRawEmployees(rawEmployees)
+        const formatedContent = formatEmployeeData(rawEmployees);
         setEmployees(formatedContent);
       } catch (error) {
         setError(error);
@@ -29,7 +31,7 @@ const useGetEmployees = (refresh) => {
     GetAllEmployees()
   }, [isLogged, refresh]);
 
-  return { employees, error }
+  return { employees, error, rawEmployees }
 }
 
 export default useGetEmployees

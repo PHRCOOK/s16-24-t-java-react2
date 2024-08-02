@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -36,4 +38,6 @@ public class ComplexDTO {
     @Valid
     @NotNull(message = "Address is mandatory")
     private AddressDTO address;
+
+    private List<WorkoutSessionDTO> activities;
 }
